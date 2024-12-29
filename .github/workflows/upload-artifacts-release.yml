@@ -54,20 +54,20 @@ jobs:
       - name: Execute Jar Actions on Rest Api Contract
         run: |
           cd api/rest
-          mvn package -Dapp.version=${{steps.read-rest-meta-properties.outputs.result}}
+          mvn --batch-mode deploy -Dapp.version=${{steps.read-rest-meta-properties.outputs.result}}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       # Check if the Async Contract Files have been changed to prepare the artifacts
       - name: Execute Jar Actions on Async Api Contract
         run: |
           cd api/async
-          mvn package -Dapp.version=${{steps.read-async-meta-properties.outputs.result}}
+          mvn --batch-mode deploy -Dapp.version=${{steps.read-async-meta-properties.outputs.result}}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - name: Upload Artifacts to Release
-        uses: softprops/action-gh-release@v2
-        with:
-          token: ${{secrets.FULLACCESS_SECRET}}
-          append_body: true
-          files: |
-            **/*.jar
+#      - name: Upload Artifacts to Release
+#        uses: softprops/action-gh-release@v2
+#        with:
+#          token: ${{secrets.FULLACCESS_SECRET}}
+#          append_body: true
+#          files: |
+#            **/*.jar
